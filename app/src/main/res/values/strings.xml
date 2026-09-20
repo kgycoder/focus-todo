@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">할 일</string>
+    <string name="channel_name">할 일 알림</string>
+    <string name="channel_desc">진행 중인 할 일을 알림으로 표시합니다.</string>
+    <string name="a11y_label">할 일 빠른 추가</string>
+    <string name="a11y_description">접근성 버튼을 누르면 현재 화면 위에 할 일 작성창이 나타납니다. 화면 내용은 읽거나 수집하지 않습니다.</string>
+    <string name="complete">완료</string>
+</resources>

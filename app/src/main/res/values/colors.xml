@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bg">#F2F2F7</color>
+    <color name="card">#FFFFFF</color>
+    <color name="field">#E9E9EE</color>
+    <color name="text_primary">#000000</color>
+    <color name="text_secondary">#8E8E93</color>
+    <color name="separator">#E5E5EA</color>
+    <color name="accent">#007AFF</color>
+    <color name="danger">#FF3B30</color>
+    <color name="launcher_bg">#007AFF</color>
+</resources>
