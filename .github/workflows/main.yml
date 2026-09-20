@@ -1,0 +1,49 @@
+name: Build APK
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare project
+        run: |
+          if [ -f QuickTodo.zip ]; then
+            mkdir -p _proj
+            unzip -q -o QuickTodo.zip -d _proj
+            DIR=$(dirname "$(find _proj -maxdepth 3 -name settings.gradle.kts | head -1)")
+          else
+            DIR=.
+          fi
+          test -f "$DIR/settings.gradle.kts" || { echo "프로젝트를 찾지 못했어요 (QuickTodo.zip 업로드 확인)"; exit 1; }
+          echo "PROJECT_DIR=$DIR" >> "$GITHUB_ENV"
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
+
+      - name: Build APK
+        working-directory: ${{ env.PROJECT_DIR }}
+        run: gradle assembleDebug --no-daemon
+
+      - name: Collect APK
+        run: cp "$PROJECT_DIR/app/build/outputs/apk/debug/app-debug.apk" QuickTodo.apk
+
+      - name: Publish release (APK 직접 다운로드용)
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: build-${{ github.run_number }}
+          name: 할 일 앱 build ${{ github.run_number }}
+          files: QuickTodo.apk
